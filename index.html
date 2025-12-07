@@ -67,15 +67,15 @@
 
 	<!-- Floating Navigation -->
 	<nav
-		class="fixed top-4 left-4 right-4 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="flex justify-between items-center h-16">
-				<div class="flex items-center">
-					<svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+		class="fixed top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700">
+		<div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+			<div class="flex justify-between items-center h-14 sm:h-16">
+				<div class="flex items-center min-w-0">
+					<svg class="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
 					</svg>
-					<span class="ml-2 text-xl font-bold font-heading">Python Data Analysis</span>
+					<span class="ml-2 text-base sm:text-xl font-bold font-heading truncate">Python Data Analysis</span>
 				</div>
 				<div class="hidden md:flex items-center space-x-8">
 					<a href="#about"
@@ -103,12 +103,36 @@
 						class="bg-cta hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer">Enroll
 						Now</a>
 				</div>
-				<button class="md:hidden text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200"
-					aria-label="Open menu">
+				<div class="flex items-center gap-2 md:hidden">
+					<!-- Theme Toggle Button (Mobile) -->
+					<button id="theme-toggle-mobile"
+						class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200"
+						aria-label="Toggle theme">
+						<svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+								fill-rule="evenodd" clip-rule="evenodd"></path>
+						</svg>
+						<svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+						</svg>
+					</button>
+					<button id="mobile-menu-toggle" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200"
+						aria-label="Open menu">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 					</svg>
 				</button>
+			</div>
+		</div>
+		<!-- Mobile Menu -->
+		<div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-700 mt-2">
+			<div class="px-4 py-3 space-y-3">
+				<a href="#about" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">About</a>
+				<a href="#curriculum" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Curriculum</a>
+				<a href="#testimonials" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Reviews</a>
+				<a href="#pricing" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Pricing</a>
+				<a href="#enroll" class="block bg-cta hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 text-center">Enroll Now</a>
 			</div>
 		</div>
 	</nav>
@@ -122,10 +146,10 @@
 						class="inline-block bg-blue-100 dark:bg-blue-900 text-primary dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
 						Transform Your Career with Data Skills
 					</div>
-					<h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+					<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
 						Master Python for <span class="text-primary">Data Analysis</span>
 					</h1>
-					<p class="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+					<p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
 						Learn to analyze, visualize, and extract insights from data using Python's most powerful libraries. From
 						beginner to professional data analyst in 12 weeks.
 					</p>
@@ -139,7 +163,7 @@
 							View Curriculum
 						</a>
 					</div>
-					<div class="flex items-center gap-8 text-sm text-slate-600 dark:text-slate-400">
+					<div class="flex flex-wrap items-center gap-4 sm:gap-8 text-sm text-slate-600 dark:text-slate-400">
 						<div class="flex items-center gap-2">
 							<svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
 								<path
@@ -156,9 +180,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="relative">
-					<div class="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 shadow-2xl">
-						<div class="bg-slate-900 rounded-xl p-6 font-mono text-sm">
+				<div class="relative mt-8 lg:mt-0">
+					<div class="bg-gradient-to-br from-primary to-secondary rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
+						<div class="bg-slate-900 rounded-xl p-3 sm:p-6 font-mono text-xs sm:text-sm overflow-x-auto">
 							<div class="flex items-center gap-2 mb-4">
 								<div class="w-3 h-3 rounded-full bg-red-500"></div>
 								<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -184,7 +208,7 @@ plt.show()
 						</div>
 					</div>
 					<div
-						class="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700">
+						class="hidden sm:block absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 shadow-lg border border-slate-200 dark:border-slate-700">
 						<div class="flex items-center gap-3">
 							<div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
 								<svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,9 +230,9 @@ plt.show()
 	<section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800">
 		<div class="max-w-7xl mx-auto">
 			<div class="text-center mb-16">
-				<h2 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Why Learn Python for Data
+				<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">Why Learn Python for Data
 					Analysis?</h2>
-				<p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Master the most in-demand skill in tech
+				<p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Master the most in-demand skill in tech
 					and unlock high-paying career opportunities</p>
 			</div>
 			<div class="grid md:grid-cols-3 gap-8">
@@ -920,22 +944,42 @@ plt.show()
 		</div>
 	</footer>
 
-	<!-- Theme Toggle Script -->
-	<script>
-		const themeToggleBtn = document.getElementById('theme-toggle');
-		const htmlElement = document.documentElement;
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const htmlElement = document.documentElement;
 
-		themeToggleBtn.addEventListener('click', () => {
-			if (htmlElement.classList.contains('dark')) {
-				htmlElement.classList.remove('dark');
-				localStorage.theme = 'light';
-			} else {
-				htmlElement.classList.add('dark');
-				localStorage.theme = 'dark';
-			}
-		});
-	</script>
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
 
-</body>
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+    </script>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script></body>
 
 </html>
