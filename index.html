@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Python for Data Analysis - Learn pandas, NumPy, visualization, and real-world data science techniques">
+    <title>Python for Data Analysis - Master Data Science with Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif']
+                    },
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#3B82F6',
+                        cta: '#F97316'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Floating Navigation -->
+    <nav class="fixed top-4 left-4 right-4 z-50 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span class="ml-2 text-xl font-bold font-heading">Python Data Analysis</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-slate-600 hover:text-primary transition-colors duration-200">About</a>
+                    <a href="#curriculum" class="text-slate-600 hover:text-primary transition-colors duration-200">Curriculum</a>
+                    <a href="#testimonials" class="text-slate-600 hover:text-primary transition-colors duration-200">Reviews</a>
+                    <a href="#pricing" class="text-slate-600 hover:text-primary transition-colors duration-200">Pricing</a>
+                    <a href="#enroll" class="bg-cta hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer">Enroll Now</a>
+                </div>
+                <button class="md:hidden text-slate-600 hover:text-primary transition-colors duration-200" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-block bg-blue-100 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                        Transform Your Career with Data Skills
+                    </div>
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight">
+                        Master Python for <span class="text-primary">Data Analysis</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-8 leading-relaxed">
+                        Learn to analyze, visualize, and extract insights from data using Python's most powerful libraries. From beginner to professional data analyst in 12 weeks.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <a href="#enroll" class="bg-cta hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-medium text-lg transition-colors duration-200 cursor-pointer text-center">
+                            Start Learning Today
+                        </a>
+                        <a href="#curriculum" class="bg-white hover:bg-slate-50 text-slate-900 px-8 py-4 rounded-lg font-medium text-lg transition-colors duration-200 border-2 border-slate-200 cursor-pointer text-center">
+                            View Curriculum
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-8 text-sm text-slate-600">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <span>4.9/5 Rating</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <span>2,500+ Students</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 shadow-2xl">
+                        <div class="bg-slate-900 rounded-xl p-6 font-mono text-sm">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <pre class="text-green-400"><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load and analyze data
+df = pd.read_csv('data.csv')
+insights = df.groupby('category').agg({
+    'revenue': ['sum', 'mean'],
+    'users': 'count'
+})
+
+# Visualize results
+insights.plot(kind='bar', figsize=(10,6))
+plt.title('Data Insights Dashboard')
+plt.show()</code></pre>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg border border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">Code Executed</p>
+                                <p class="text-xs text-slate-600">Results ready!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">Why Learn Python for Data Analysis?</h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">Master the most in-demand skill in tech and unlock high-paying career opportunities</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 rounded-2xl p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+                    <div class="w-14 h-14 bg-primary rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Fast-Track Your Career</h3>
+                    <p class="text-slate-600 leading-relaxed">Data analysts earn $85k-$120k average salary. Gain skills employers desperately need in just 12 weeks.</p>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+                    <div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Real-World Projects</h3>
+                    <p class="text-slate-600 leading-relaxed">Build a portfolio with 5+ projects analyzing real datasets from business, finance, and healthcare sectors.</p>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+                    <div class="w-14 h-14 bg-cta rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Comprehensive Learning</h3>
+                    <p class="text-slate-600 leading-relaxed">From Python basics to advanced analytics - pandas, NumPy, matplotlib, statistical analysis, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">Course Curriculum</h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">12 weeks of intensive, hands-on training structured for maximum learning efficiency</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-primary transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">01</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Python Fundamentals</h3>
+                            <p class="text-slate-600 mb-4">Variables, data types, control flow, functions, and object-oriented programming basics</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">2 weeks</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">15 lessons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-primary transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">02</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">NumPy & Array Operations</h3>
+                            <p class="text-slate-600 mb-4">Numerical computing, array manipulation, broadcasting, and mathematical operations</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">1.5 weeks</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">12 lessons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-primary transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">03</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Pandas for Data Manipulation</h3>
+                            <p class="text-slate-600 mb-4">DataFrames, data cleaning, filtering, grouping, merging, and transformation techniques</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">3 weeks</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">20 lessons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-primary transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">04</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Data Visualization</h3>
+                            <p class="text-slate-600 mb-4">Matplotlib, Seaborn, and Plotly for creating compelling charts, graphs, and dashboards</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">2 weeks</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">16 lessons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-primary transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">05</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Statistical Analysis</h3>
+                            <p class="text-slate-600 mb-4">Descriptive statistics, hypothesis testing, correlation, regression, and probability theory</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">2 weeks</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">14 lessons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-primary transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">06</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Capstone Project</h3>
+                            <p class="text-slate-600 mb-4">End-to-end data analysis project: from raw data to insights and presentation</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">1.5 weeks</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">Portfolio piece</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">Student Success Stories</h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">Join thousands of students who transformed their careers with Python data analysis skills</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 rounded-2xl p-8">
+                    <div class="flex items-center gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                    </div>
+                    <p class="text-slate-700 italic mb-6 leading-relaxed">"This course transformed my career. I went from knowing nothing about Python to landing a data analyst role at a Fortune 500 company in just 4 months. The projects gave me real portfolio pieces to show employers."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+                            SJ
+                        </div>
+                        <div>
+                            <p class="font-semibold">Sarah Johnson</p>
+                            <p class="text-sm text-slate-600">Data Analyst at Microsoft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-8">
+                    <div class="flex items-center gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                    </div>
+                    <p class="text-slate-700 italic mb-6 leading-relaxed">"Best investment I've made in my education. The instructor breaks down complex concepts perfectly. I now use pandas and NumPy daily in my role. My salary increased by 40% after completing this course."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+                            MC
+                        </div>
+                        <div>
+                            <p class="font-semibold">Michael Chen</p>
+                            <p class="text-sm text-slate-600">Business Intelligence Analyst</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 rounded-2xl p-8">
+                    <div class="flex items-center gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                    </div>
+                    <p class="text-slate-700 italic mb-6 leading-relaxed">"As a career switcher, I was nervous about learning Python. The course is incredibly well-structured with hands-on exercises. Within 3 months, I built my own data dashboard that impressed interviewers."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+                            EP
+                        </div>
+                        <div>
+                            <p class="font-semibold">Emily Patel</p>
+                            <p class="text-sm text-slate-600">Junior Data Scientist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">Invest in your future. Lifetime access to all course materials and updates</p>
+            </div>
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white rounded-3xl p-8 md:p-12 border-2 border-primary shadow-2xl">
+                    <div class="text-center mb-8">
+                        <div class="inline-block bg-cta/10 text-cta px-4 py-2 rounded-full text-sm font-medium mb-4">
+                            Limited Time Offer - 40% OFF
+                        </div>
+                        <div class="flex items-center justify-center gap-4 mb-4">
+                            <span class="text-3xl text-slate-400 line-through">$499</span>
+                            <span class="text-6xl font-bold text-slate-900">$299</span>
+                        </div>
+                        <p class="text-slate-600">One-time payment, lifetime access</p>
+                    </div>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">12 weeks of comprehensive video lessons</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">77 hands-on lessons with real datasets</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">5 portfolio-ready capstone projects</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">Downloadable Jupyter notebooks & datasets</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">Private community forum access</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">Certificate of completion</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">Lifetime access to all future updates</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-slate-700">30-day money-back guarantee</span>
+                        </div>
+                    </div>
+                    <a href="#enroll" class="block w-full bg-cta hover:bg-orange-600 text-white text-center px-8 py-4 rounded-lg font-bold text-lg transition-colors duration-200 cursor-pointer mb-4">
+                        Enroll Now - Save $200
+                    </a>
+                    <p class="text-center text-sm text-slate-600">Limited spots available. Offer ends in 48 hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
+            </div>
+            <div class="space-y-6">
+                <details class="bg-slate-50 rounded-xl p-6 cursor-pointer group">
+                    <summary class="font-semibold text-lg text-slate-900 cursor-pointer list-none flex justify-between items-center">
+                        Do I need prior programming experience?
+                        <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-slate-600">No prior programming experience required! We start with Python fundamentals and progressively build your skills. Complete beginners are welcome.</p>
+                </details>
+                <details class="bg-slate-50 rounded-xl p-6 cursor-pointer group">
+                    <summary class="font-semibold text-lg text-slate-900 cursor-pointer list-none flex justify-between items-center">
+                        How long do I have access to the course?
+                        <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-slate-600">You get lifetime access! Learn at your own pace and revisit materials whenever you need. All future updates are included free.</p>
+                </details>
+                <details class="bg-slate-50 rounded-xl p-6 cursor-pointer group">
+                    <summary class="font-semibold text-lg text-slate-900 cursor-pointer list-none flex justify-between items-center">
+                        What tools will I learn?
+                        <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-slate-600">You'll master Python, pandas, NumPy, Matplotlib, Seaborn, Plotly, Jupyter Notebooks, and statistical analysis libraries. These are the industry-standard tools used by professional data analysts.</p>
+                </details>
+                <details class="bg-slate-50 rounded-xl p-6 cursor-pointer group">
+                    <summary class="font-semibold text-lg text-slate-900 cursor-pointer list-none flex justify-between items-center">
+                        Is there a certificate upon completion?
+                        <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-slate-600">Yes! Upon completing all modules and the capstone project, you'll receive a certificate of completion you can add to your LinkedIn profile and resume.</p>
+                </details>
+                <details class="bg-slate-50 rounded-xl p-6 cursor-pointer group">
+                    <summary class="font-semibold text-lg text-slate-900 cursor-pointer list-none flex justify-between items-center">
+                        What if I'm not satisfied with the course?
+                        <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </summary>
+                    <p class="mt-4 text-slate-600">We offer a 30-day money-back guarantee. If you're not satisfied for any reason within the first 30 days, we'll refund your purchase in full, no questions asked.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="enroll" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary to-secondary">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl sm:text-5xl font-bold text-white mb-6">Ready to Transform Your Career?</h2>
+            <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">Join 2,500+ students who are already building their data analysis skills with Python. Start your journey today.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#pricing" class="bg-cta hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors duration-200 cursor-pointer inline-block">
+                    Enroll Now - $299
+                </a>
+                <a href="#curriculum" class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors duration-200 border-2 border-white/30 cursor-pointer inline-block">
+                    View Full Curriculum
+                </a>
+            </div>
+            <p class="text-blue-100 mt-6 text-sm">30-day money-back guarantee. No risk.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-white font-heading">Python Data Analysis</span>
+                    </div>
+                    <p class="text-sm">Transform your career with Python data analysis skills.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-white mb-4">Course</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#curriculum" class="hover:text-primary transition-colors duration-200 cursor-pointer">Curriculum</a></li>
+                        <li><a href="#testimonials" class="hover:text-primary transition-colors duration-200 cursor-pointer">Reviews</a></li>
+                        <li><a href="#pricing" class="hover:text-primary transition-colors duration-200 cursor-pointer">Pricing</a></li>
+                        <li><a href="#enroll" class="hover:text-primary transition-colors duration-200 cursor-pointer">Enroll</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Free Tutorials</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Community</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Career Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-white mb-4">Support</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">FAQ</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Contact</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Terms</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm">&copy; 2025 Python Data Analysis Course. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-slate-400 hover:text-primary transition-colors duration-200 cursor-pointer" aria-label="Twitter">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-primary transition-colors duration-200 cursor-pointer" aria-label="LinkedIn">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-slate-400 hover:text-primary transition-colors duration-200 cursor-pointer" aria-label="YouTube">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23 9.71a8.5 8.5 0 00-.91-4.13 2.92 2.92 0 00-1.72-1A78.36 78.36 0 0012 4.27a78.45 78.45 0 00-8.34.3 2.87 2.87 0 00-1.46.74c-.9.83-1 2.25-1.1 3.45a48.29 48.29 0 000 6.48 9.55 9.55 0 00.3 2.12 3.14 3.14 0 00.71 1.36 3.05 3.05 0 001.49.78 45.18 45.18 0 005.59.26c3 0 6.14 0 9.21-.26a2.88 2.88 0 001.53-.78 2.49 2.49 0 00.61-1 10.58 10.58 0 00.52-3.4c.04-.56.04-3.94.04-4.54zM9.74 14.85V8.66l5.92 3.11c-1.66.92-3.85 1.96-5.92 3.08z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
