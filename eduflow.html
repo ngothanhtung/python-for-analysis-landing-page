@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="EDUFLOW - Phần mềm quản lý tuyển sinh trực tuyến cho trường liên cấp. Từ mầm non đến cấp 3, giải pháp tuyển sinh toàn diện cho nhà trường">
+	<title>EDUFLOW - Phần Mềm Quản Lý Tuyển Sinh Trường Liên Cấp</title>
+	<script>
+		// Theme initialization (before page renders to prevent flash)
+		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			document.documentElement.classList.add('dark')
+		} else {
+			document.documentElement.classList.remove('dark')
+		}
+		
+	</script>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<script>
+		tailwind.config = {
+			darkMode: 'class',
+			theme: {
+				extend: {
+					fontFamily: {
+						heading: ['Space Grotesk', 'sans-serif'],
+						body: ['DM Sans', 'sans-serif']
+					},
+					colors: {
+						primary: '#2563EB',
+						secondary: '#3B82F6',
+						cta: '#F97316'
+					}
+				}
+			}
+		}
+	</script>
+	<style>
+		body {
+			font-family: 'DM Sans', sans-serif;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: 'Space Grotesk', sans-serif;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+	</style>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+	<!-- Floating Navigation -->
+	<nav
+		class="fixed top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700">
+		<div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+			<div class="flex justify-between items-center h-14 sm:h-16">
+				<div class="flex items-center min-w-0">
+					<svg class="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+					</svg>
+					<span class="ml-2 text-base sm:text-xl font-bold font-heading truncate">EDUFLOW</span>
+				</div>
+				<div class="hidden md:flex items-center space-x-8">
+					<a href="#about"
+						class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200">Giới Thiệu</a>
+					<a href="#features"
+						class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200">Tính Năng</a>
+					<a href="#testimonials"
+						class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200">Đánh Giá</a>
+				<a href="#pricing"
+					class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200">Báo Giá</a>
+				
+				<a href="index-en.html" class="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 font-medium text-sm">EN</a>
+				<!-- Theme Toggle Button -->
+				<button id="theme-toggle"
+						class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200"
+						aria-label="Toggle theme">
+						<svg id="theme-toggle-light-icon" class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+								fill-rule="evenodd" clip-rule="evenodd"></path>
+						</svg>
+						<svg id="theme-toggle-dark-icon" class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+						</svg>
+					</button>
+					<a href="#contact"
+						class="bg-cta hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer">Liên Hệ Ngay</a>
+				</div>
+				<div class="flex items-center gap-2 md:hidden">
+					
+					<!-- Theme Toggle Button (Mobile) -->
+					<button id="theme-toggle-mobile"
+						class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200"
+						aria-label="Toggle theme">
+						<svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+								fill-rule="evenodd" clip-rule="evenodd"></path>
+						</svg>
+						<svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+						</svg>
+					</button>
+					<button id="mobile-menu-toggle" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200"
+						aria-label="Open menu">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+			</div>
+		</div>
+		<!-- Mobile Menu -->
+		<div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-700 mt-2">
+			<div class="px-4 py-3 space-y-3">
+				<a href="#about" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Giới Thiệu</a>
+				<a href="#features" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Tính Năng</a>
+				<a href="#testimonials" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Đánh Giá</a>
+				<a href="#pricing" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2">Báo Giá</a>
+				<a href="index-en.html" class="block text-slate-600 dark:text-slate-300 hover:text-primary transition-colors duration-200 py-2 border-t border-slate-200 dark:border-slate-700 pt-3">🇬🇧 EN</a>
+				<a href="#contact" class="block bg-cta hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 text-center">Liên Hệ Ngay</a>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="grid lg:grid-cols-2 gap-12 items-center">
+				<div>
+					<div
+						class="inline-block bg-blue-100 dark:bg-blue-900 text-primary dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
+						Giải Pháp Quản Lý Tuyển Sinh Chuyên Nghiệp
+					</div>
+					<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+						<span class="text-primary">EDUFLOW</span> - Phần Mềm Quản Lý Tuyển Sinh Trường Liên Cấp
+					</h1>
+					<p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+						Giải pháp quản lý tuyển sinh trực tuyến toàn diện cho các trường liên cấp từ mầm non đến cấp 3. Tối ưu hóa quy trình tuyển sinh, tiết kiệm thời gian và chi phí, nâng cao hiệu quả quản lý.
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 mb-8">
+						<a href="#contact"
+							class="bg-cta hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-medium text-lg transition-colors duration-200 cursor-pointer text-center">
+							Liên Hệ Tư Vấn
+						</a>
+						<a href="#features"
+							class="bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-900 dark:text-white px-8 py-4 rounded-lg font-medium text-lg transition-colors duration-200 border-2 border-slate-200 dark:border-slate-600 cursor-pointer text-center">
+							Khám Phá Tính Năng
+						</a>
+					</div>
+					<div class="flex flex-wrap items-center gap-4 sm:gap-8 text-sm text-slate-600 dark:text-slate-400">
+						<div class="flex items-center gap-2">
+							<svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+								<path
+									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+							</svg>
+							<span>Tin cậy hàng đầu</span>
+						</div>
+						<div class="flex items-center gap-2">
+							<svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+									d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+							</svg>
+							<span>100+ Trường sử dụng</span>
+						</div>
+					</div>
+				</div>
+				<div class="relative mt-8 lg:mt-0">
+					<div class="bg-gradient-to-br from-primary to-secondary rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
+						<div class="bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-6 overflow-x-auto">
+							<div class="flex items-center gap-2 mb-4">
+								<div class="w-3 h-3 rounded-full bg-red-500"></div>
+								<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+								<div class="w-3 h-3 rounded-full bg-green-500"></div>
+								<span class="text-sm font-medium ml-2">EDUFLOW Dashboard</span>
+							</div>
+							<div class="space-y-3">
+								<div class="flex items-center justify-between p-3 bg-blue-50 dark:bg-slate-700 rounded-lg">
+									<span class="text-sm font-medium">📊 Tổng hồ sơ tuyển sinh</span>
+									<span class="text-lg font-bold text-primary">1,234</span>
+								</div>
+								<div class="flex items-center justify-between p-3 bg-green-50 dark:bg-slate-700 rounded-lg">
+									<span class="text-sm font-medium">✅ Đã duyệt</span>
+									<span class="text-lg font-bold text-green-600">856</span>
+								</div>
+								<div class="flex items-center justify-between p-3 bg-yellow-50 dark:bg-slate-700 rounded-lg">
+									<span class="text-sm font-medium">⏳ Chờ xem xét</span>
+									<span class="text-lg font-bold text-yellow-600">378</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						class="hidden sm:block absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white dark:bg-slate-800 rounded-xl p-3 sm:p-4 shadow-lg border border-slate-200 dark:border-slate-700">
+						<div class="flex items-center gap-3">
+							<div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+								<svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+								</svg>
+							</div>
+							<div>
+								<p class="text-sm font-semibold">Tự động hóa</p>
+								<p class="text-xs text-slate-600 dark:text-slate-400">Tiết kiệm 80% thời gian!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">Tại Sao Nên Chọn EDUFLOW?</h2>
+				<p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Giải pháp quản lý tuyển sinh hàng đầu được tin dùng bởi hàng trăm trường học trên toàn quốc</p>
+			</div>
+			<div class="grid md:grid-cols-3 gap-8">
+				<div
+					class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+					<div class="w-14 h-14 bg-primary rounded-xl flex items-center justify-center mb-6">
+						<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+						</svg>
+					</div>
+					<h3 class="text-2xl font-bold mb-4">Tự Động Hóa Toàn Diện</h3>
+					<p class="text-slate-600 dark:text-slate-300 leading-relaxed">Tự động hóa quy trình tuyển sinh từ đăng ký đến phê duyệt. Tiết kiệm 80% thời gian xử lý hồ sơ và giảm thiểu sai sót.</p>
+				</div>
+				<div
+					class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+					<div class="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center mb-6">
+						<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+						</svg>
+					</div>
+					<h3 class="text-2xl font-bold mb-4">Quản Lý Linh Hoạt</h3>
+					<p class="text-slate-600 dark:text-slate-300 leading-relaxed">Quản lý đa cấp độ từ mầm non đến cấp 3. Tùy chỉnh quy trình theo đặc thù từng cấp học và từng trường.</p>
+				</div>
+				<div
+					class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+					<div class="w-14 h-14 bg-cta rounded-xl flex items-center justify-center mb-6">
+						<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+						</svg>
+					</div>
+					<h3 class="text-2xl font-bold mb-4">Báo Cáo Thông Minh</h3>
+					<p class="text-slate-600 dark:text-slate-300 leading-relaxed">Dashboard trực quan với báo cáo theo thời gian thực. Phân tích dữ liệu tuyển sinh để ra quyết định chính xác.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features Section -->
+	<section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h2 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Tính Năng Nổi Bật</h2>
+				<p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Giải pháp toàn diện cho mọi nhu cầu quản lý tuyển sinh của trường học</p>
+			</div>
+			<div class="grid md:grid-cols-2 gap-6">
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200 cursor-pointer">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+							<span class="text-primary font-bold text-lg">01</span>
+						</div>
+						<div>
+							<h3 class="text-xl font-bold mb-2">Đăng Ký Trực Tuyến</h3>
+							<p class="text-slate-600 dark:text-slate-300 mb-4">Hệ thống đăng ký trực tuyến 24/7, dễ sử dụng. Phụ huynh có thể nộp hồ sơ mọi lúc mọi nơi qua website hoặc app mobile</p>
+							<div class="flex flex-wrap gap-2">
+								<span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Web & Mobile</span>
+								<span
+									class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">24/7</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200 cursor-pointer">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+							<span class="text-primary font-bold text-lg">02</span>
+						</div>
+						<div>
+							<h3 class="text-xl font-bold mb-2">Quản Lý Hồ Sơ Thông Minh</h3>
+							<p class="text-slate-600 dark:text-slate-300 mb-4">Tự động phân loại, lưu trữ và tìm kiếm hồ sơ. Kiểm tra tính hợp lệ và cảnh báo thiếu thông tin tự động</p>
+							<div class="flex flex-wrap gap-2">
+								<span
+									class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Tự động hóa</span>
+								<span
+									class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">AI hỗ trợ</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200 cursor-pointer">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+							<span class="text-primary font-bold text-lg">03</span>
+						</div>
+						<div>
+							<h3 class="text-xl font-bold mb-2">Thanh Toán Trực Tuyến</h3>
+							<p class="text-slate-600 dark:text-slate-300 mb-4">Tích hợp cổng thanh toán đa dạng. Theo dõi và đối chiếu lệ phí tự động, minh bạch</p>
+							<div class="flex flex-wrap gap-2">
+								<span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Đa cổng thanh toán</span>
+								<span
+									class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">An toàn</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200 cursor-pointer">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+							<span class="text-primary font-bold text-lg">04</span>
+						</div>
+						<div>
+							<h3 class="text-xl font-bold mb-2">Thông Báo Tự Động</h3>
+							<p class="text-slate-600 dark:text-slate-300 mb-4">Gửi thông báo qua Email, SMS, Zalo về tiến độ xét duyệt, lịch phỏng vấn, kết quả tuyển sinh</p>
+							<div class="flex flex-wrap gap-2">
+								<span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Đa kênh</span>
+								<span
+									class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Real-time</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200 cursor-pointer">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+							<span class="text-primary font-bold text-lg">05</span>
+						</div>
+						<div>
+							<h3 class="text-xl font-bold mb-2">Báo Cáo & Thống Kê</h3>
+							<p class="text-slate-600 dark:text-slate-300 mb-4">Dashboard trực quan với biểu đồ thống kê tuyển sinh theo thời gian thực, xuất báo cáo đa dạng</p>
+							<div class="flex flex-wrap gap-2">
+								<span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Trực quan</span>
+								<span
+									class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Xuất Excel/PDF</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200 cursor-pointer">
+					<div class="flex items-start gap-4">
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+							<span class="text-primary font-bold text-lg">06</span>
+						</div>
+						<div>
+						<h3 class="text-xl font-bold mb-2">Bảo Mật & An Toàn</h3>
+						<p class="text-slate-600 dark:text-slate-300 mb-4">Mã hóa dữ liệu toàn diện, sao lưu tự động, tuân thủ quy định bảo mật thông tin cá nhân</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">ISO 27001</span>
+							<span
+								class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm">Backup tự động</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonials Section -->
+	<section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h2 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Trường Học Tin Dùng EDUFLOW</h2>
+				<p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Hơn 100 trường học đang sử dụng EDUFLOW để tối ưu hóa quy trình tuyển sinh</p>
+			</div>
+			<div class="grid md:grid-cols-3 gap-8">
+				<div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-8">
+					<div class="flex items-center gap-1 mb-4">
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+					</div>
+					<p class="text-slate-700 dark:text-slate-200 italic mb-6 leading-relaxed">"EDUFLOW đã giúp trường chúng tôi tiết kiệm 80% thời gian xử lý hồ sơ tuyển sinh. Quy trình từ nộp hồ sơ đến thông báo kết quả hoàn toàn tự động, minh bạch. Phụ huynh rất hài lòng với trải nghiệm đăng ký trực tuyến."</p>
+					<div class="flex items-center gap-3">
+						<div
+							class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+							NT
+						</div>
+						<div>
+							<p class="font-semibold">Nguyễn Thị Mai</p>
+							<p class="text-sm text-slate-600 dark:text-slate-400">Hiệu trưởng - Trường THCS Nguyễn Du, Hà Nội</p>
+						</div>
+					</div>
+				</div>
+				<div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-8">
+					<div class="flex items-center gap-1 mb-4">
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+					</div>
+					<p class="text-slate-700 dark:text-slate-200 italic mb-6 leading-relaxed">"Hệ thống quản lý đa cấp từ mầm non đến THPT của EDUFLOW rất phù hợp với trường liên cấp như chúng tôi. Dashboard báo cáo trực quan giúp ban lãnh đạo nắm bắt tình hình tuyển sinh ngay lập tức. Đội ngũ hỗ trợ nhiệt tình và chuyên nghiệp."</p>
+					<div class="flex items-center gap-3">
+						<div
+							class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+							TC
+						</div>
+						<div>
+							<p class="font-semibold">Trần Văn Cường</p>
+							<p class="text-sm text-slate-600 dark:text-slate-400">Phó Hiệu trưởng - Trường Liên cấp Vinschool, TP.HCM</p>
+						</div>
+					</div>
+				</div>
+				<div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-8">
+					<div class="flex items-center gap-1 mb-4">
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+						<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+						</svg>
+					</div>
+					<p class="text-slate-700 dark:text-slate-200 italic mb-6 leading-relaxed">"EDUFLOW đã giúp trường mẫu giáo chúng tôi chuyển đổi số hoàn toàn trong quy trình tuyển sinh. Phụ huynh có thể đăng ký và thanh toán online rất tiện lợi. Chức năng thống kê và báo cáo giúp chúng tôi lên kế hoạch tuyển sinh chính xác hơn từng năm."</p>
+					<div class="flex items-center gap-3">
+						<div
+							class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+							LH
+						</div>
+						<div>
+							<p class="font-semibold">Lê Hồng Hạnh</p>
+							<p class="text-sm text-slate-600 dark:text-slate-400">Giám đốc - Trường Mầm non Hoa Mai, Đà Nẵng</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Pricing Section -->
+	<section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h2 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Bảng Giá Linh Hoạt</h2>
+				<p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">Gói giải pháp phù hợp với quy mô và nhu cầu của từng trường học</p>
+			</div>
+			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+				<!-- Starter Plan -->
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200">
+					<div class="text-center mb-6">
+						<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Cơ Bản</h3>
+						<p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Hoàn hảo cho người mới bắt đầu khám phá Python</p>
+						<div class="mb-4">
+							<span class="text-5xl font-bold text-slate-900 dark:text-white">$149</span>
+						</div>
+						<p class="text-slate-600 dark:text-slate-400 text-sm">Thanh toán một lần</p>
+					</div>
+					<div class="space-y-3 mb-8">
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm">6 tuần video bài giảng</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm">40 bài học thực hành</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm">2 dự án hướng dẫn</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm">Jupyter notebooks & bộ dữ liệu</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm">Truy cập diễn đàn cộng đồng</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm">6 tháng truy cập</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-slate-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+							<span class="text-slate-400 text-sm">Chứng chỉ hoàn thành</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-slate-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+							<span class="text-slate-400 text-sm">Hỗ trợ giảng viên</span>
+						</div>
+					</div>
+					<a href="#enroll"
+						class="block w-full bg-slate-900 hover:bg-slate-800 text-white text-center px-6 py-3 rounded-lg font-medium transition-colors duration-200 cursor-pointer">
+						Bắt Đầu
+					</a>
+				</div>
+
+				<!-- Professional Plan (Most Popular) -->
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-primary shadow-2xl relative transform md:scale-105">
+					<div class="absolute -top-4 left-1/2 -translate-x-1/2">
+						<span class="bg-cta text-white px-6 py-1.5 rounded-full text-sm font-medium">Phổ Biến Nhất</span>
+					</div>
+					<div class="text-center mb-6">
+						<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Chuyên Nghiệp</h3>
+						<p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Khóa học đầy đủ cho người học nghiêm túc</p>
+						<div class="mb-2">
+							<span class="text-2xl text-slate-400 line-through">$499</span>
+						</div>
+						<div class="mb-4">
+							<span class="text-5xl font-bold text-slate-900 dark:text-white">$299</span>
+						</div>
+						<div class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium mb-2">
+							Tiết kiệm 40%
+						</div>
+						<p class="text-slate-600 dark:text-slate-400 text-sm">Thanh toán một lần</p>
+					</div>
+					<div class="space-y-3 mb-8">
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">12 tuần video
+								bài giảng</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">77 bài học thực hành</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">5 dự án cho portfolio</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Jupyter notebooks &
+								bộ dữ liệu</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Diễn đàn cộng đồng riêng tư</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Chứng chỉ
+								hoàn thành</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Truy cập trọn đời +
+								cập nhật</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Bảo hành hoàn tiền 30 ngày</span>
+						</div>
+					</div>
+					<a href="#enroll"
+						class="block w-full bg-cta hover:bg-orange-600 text-white text-center px-6 py-3 rounded-lg font-bold transition-colors duration-200 cursor-pointer">
+						Đăng Ký Ngay
+					</a>
+				</div>
+
+				<!-- Premium Plan -->
+				<div
+					class="bg-white dark:bg-slate-800 rounded-2xl p-8 border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors duration-200">
+					<div class="text-center mb-6">
+						<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Cao Cấp</h3>
+						<p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Học tập tối ưu với hỗ trợ 1-1</p>
+						<div class="mb-4">
+							<span class="text-5xl font-bold text-slate-900 dark:text-white">$599</span>
+						</div>
+						<p class="text-slate-600 dark:text-slate-400 text-sm">Thanh toán một lần</p>
+					</div>
+					<div class="space-y-3 mb-8">
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Tất cả tính năng gói
+								Chuyên Nghiệp</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">5 giờ hướng dẫn 1-1</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Hỗ trợ ưu tiên (phản hồi 24h)</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Đánh giá code cho tất cả
+								dự án</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Chỉnh sửa Resume & LinkedIn</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Các buổi chuẩn bị
+								phỏng vấn</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Hướng dẫn chiến lược
+								tìm việc</span>
+						</div>
+						<div class="flex items-start gap-3">
+							<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<span class="text-slate-700 dark:text-slate-300 text-sm font-medium">Mạng lưới cựu sinh viên độc quyền</span>
+						</div>
+					</div>
+					<a href="#enroll"
+						class="block w-full bg-primary hover:bg-blue-700 text-white text-center px-6 py-3 rounded-lg font-medium transition-colors duration-200 cursor-pointer">
+						Nâng Cấp Premium
+					</a>
+				</div>
+
+			</div>
+			<p class="text-center text-slate-600 dark:text-slate-400 mt-12">Tất cả các gói đều có bảo hành hoàn tiền trong 30 ngày</p>
+		</div>
+	</section>
+
+	<!-- FAQ Section -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800">
+		<div class="max-w-4xl mx-auto">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Câu Hỏi Thường Gặp</h2>
+			</div>
+			<div class="space-y-6">
+				<details class="bg-slate-50 dark:bg-slate-700 rounded-xl p-6 cursor-pointer group">
+					<summary
+						class="font-semibold text-lg text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+						Tôi có cần kinh nghiệm lập trình trước không?
+						<svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none"
+							stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					<p class="mt-4 text-slate-600 dark:text-slate-300">Không cần kinh nghiệm lập trình trước! Chúng tôi bắt đầu từ các kiến thức cơ bản về
+						Python và dần dần xây dựng kỹ năng của bạn. Người mới bắt đầu hoàn toàn được chào đón.</p>
+				</details>
+				<details class="bg-slate-50 dark:bg-slate-700 rounded-xl p-6 cursor-pointer group">
+					<summary
+						class="font-semibold text-lg text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+						Tôi có quyền truy cập khóa học trong bao lâu?
+						<svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none"
+							stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					<p class="mt-4 text-slate-600 dark:text-slate-300">Bạn có quyền truy cập trọn đời! Học theo tốc độ của riêng bạn và quay lại tài liệu
+						bất cứ khi nào bạn cần. Tất cả các bản cập nhật trong tương lai đều miễn phí.</p>
+				</details>
+				<details class="bg-slate-50 dark:bg-slate-700 rounded-xl p-6 cursor-pointer group">
+					<summary
+						class="font-semibold text-lg text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+						Tôi sẽ học những công cụ nào?
+						<svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none"
+							stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					<p class="mt-4 text-slate-600 dark:text-slate-300">Bạn sẽ thành thạo Python, pandas, NumPy, Matplotlib, Seaborn,
+						Plotly, Jupyter Notebooks và các thư viện phân tích thống kê. Đây là các công cụ tiêu chuẩn ngành được sử dụng bởi
+						các chuyên gia phân tích dữ liệu chuyên nghiệp.</p>
+				</details>
+				<details class="bg-slate-50 dark:bg-slate-700 rounded-xl p-6 cursor-pointer group">
+					<summary
+						class="font-semibold text-lg text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+						Có chứng chỉ khi hoàn thành không?
+						<svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none"
+							stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					<p class="mt-4 text-slate-600 dark:text-slate-300">Có! Sau khi hoàn thành tất cả các module và dự án tổng hợp,
+						bạn sẽ nhận được chứng chỉ hoàn thành mà bạn có thể thêm vào hồ sơ LinkedIn và sơ yếu lý lịch.</p>
+				</details>
+				<details class="bg-slate-50 dark:bg-slate-700 rounded-xl p-6 cursor-pointer group">
+					<summary
+						class="font-semibold text-lg text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+						Nếu tôi không hài lòng với khóa học thì sao?
+						<svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200" fill="none"
+							stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					<p class="mt-4 text-slate-600 dark:text-slate-300">Chúng tôi cung cấp bảo hành hoàn tiền 30 ngày. Nếu bạn không hài lòng vì
+						bất kỳ lý do gì trong vòng 30 ngày đầu tiên, chúng tôi sẽ hoàn lại toàn bộ số tiền của bạn, không cần hỏi gì thêm.</p>
+				</details>
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Section -->
+	<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary to-secondary">
+		<div class="max-w-4xl mx-auto text-center">
+			<h2 class="text-4xl sm:text-5xl font-bold text-white mb-6">Sẵn Sàng Chuyển Đổi Số Tuyển Sinh?</h2>
+			<p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">Đăng ký ngay để nhận tư vấn miễn phí và trải nghiệm EDUFLOW trong 30 ngày không mất phí.</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<a href="#pricing"
+					class="bg-cta hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors duration-200 cursor-pointer inline-block">
+					Xem Bảng Giá
+				</a>
+				<a href="#features"
+					class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors duration-200 border-2 border-white/30 cursor-pointer inline-block">
+					Tìm Hiểu Thêm
+				</a>
+			</div>
+					<p class="text-blue-100 mt-6 text-sm">Miễn phí dùng thử 30 ngày. Hỗ trợ triển khai 24/7.</p>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="bg-slate-900 text-slate-300 py-12 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="grid md:grid-cols-4 gap-8 mb-8">
+				<div>
+					<div class="flex items-center mb-4">
+						<svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+						</svg>
+					<span class="ml-2 text-xl font-bold text-white font-heading">EDUFLOW</span>
+				</div>
+				<p class="text-sm">Giải pháp quản lý tuyển sinh hàng đầu cho trường liên cấp.</p>
+				</div>
+				<div>
+					<h3 class="font-bold text-white mb-4">Sản Phẩm</h3>
+					<ul class="space-y-2 text-sm">
+						<li><a href="#features" class="hover:text-primary transition-colors duration-200 cursor-pointer">Tính Năng</a>
+						</li>
+						<li><a href="#testimonials" class="hover:text-primary transition-colors duration-200 cursor-pointer">Đánh Giá</a>
+						</li>
+						<li><a href="#pricing" class="hover:text-primary transition-colors duration-200 cursor-pointer">Bảng Giá</a></li>
+						<li><a href="#contact" class="hover:text-primary transition-colors duration-200 cursor-pointer">Liên Hệ</a></li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="font-bold text-white mb-4">Tài Nguyên</h3>
+					<ul class="space-y-2 text-sm">
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Blog</a></li>
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Tài Liệu</a></li>
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Video Hướng Dẫn</a>
+						</li>
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">FAQ</a></li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="font-bold text-white mb-4">Hỗ Trợ</h3>
+					<ul class="space-y-2 text-sm">
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Câu Hỏi Thường Gặp</a></li>
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Liên Hệ</a>
+						</li>
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Điều Khoản</a></li>
+						<li><a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Quyền Riêng Tư</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+				<p class="text-sm">&copy; 2025 EDUFLOW by SOFTECH. Bảo lưu mọi quyền.</p>
+				<div class="flex gap-4">
+					<a href="#" class="text-slate-400 hover:text-primary transition-colors duration-200 cursor-pointer"
+						aria-label="Twitter">
+						<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<path
+								d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+						</svg>
+					</a>
+					<a href="#" class="text-slate-400 hover:text-primary transition-colors duration-200 cursor-pointer"
+						aria-label="LinkedIn">
+						<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+							<circle cx="4" cy="4" r="2" />
+						</svg>
+					</a>
+					<a href="#" class="text-slate-400 hover:text-primary transition-colors duration-200 cursor-pointer"
+						aria-label="YouTube">
+						<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+							<path
+								d="M23 9.71a8.5 8.5 0 00-.91-4.13 2.92 2.92 0 00-1.72-1A78.36 78.36 0 0012 4.27a78.45 78.45 0 00-8.34.3 2.87 2.87 0 00-1.46.74c-.9.83-1 2.25-1.1 3.45a48.29 48.29 0 000 6.48 9.55 9.55 0 00.3 2.12 3.14 3.14 0 00.71 1.36 3.05 3.05 0 001.49.78 45.18 45.18 0 005.59.26c3 0 6.14 0 9.21-.26a2.88 2.88 0 001.53-.78 2.49 2.49 0 00.61-1 10.58 10.58 0 00.52-3.4c.04-.56.04-3.94.04-4.54zM9.74 14.85V8.66l5.92 3.11c-1.66.92-3.85 1.96-5.92 3.08z" />
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const htmlElement = document.documentElement;
+
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+    </script>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+
+    
+</body>
+
+</html>
